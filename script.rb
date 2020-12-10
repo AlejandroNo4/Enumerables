@@ -48,7 +48,7 @@ module Enumerable
         i += 1
       end
     else
-      to_enum(:my_all)
+      to_enum(:my_all?)
     end
     true
   end
@@ -62,7 +62,7 @@ module Enumerable
         i += 1
       end
     else
-      to_enum(:my_any)
+      to_enum(:my_any?)
     end
     false
   end
@@ -76,10 +76,28 @@ module Enumerable
         i += 1
       end
     else
-      to_enum(:my_none)
+      to_enum(:my_none?)
     end
     true
   end
+
+  def my_count(req = nil) #req = requested value
+    counter = 0
+    if req
+      my_each {|n| counter+=1 if n == req}
+    elsif block_given?
+      i = 0
+      length.times do
+        value = yield self[i]
+        counter +=1 if value == true 
+        i += 1
+      end
+    else
+      to_enum(:my_counter)
+    end
+    counter
+    end
+
 end
 
 
@@ -93,6 +111,7 @@ a = [1,2,3,4,5,6]
 #puts a.my_all? {|n| n > 9}
 #puts a.my_any? {|n| n < 9}
 #puts a.my_none? {|n| n == 4}
+#puts a.my_count {|n| n > 2}, a.my_count(4)
 
 #a.each {|n| puts n + 5 + 2}
 #a.each_with_index {|n, i| print n + 5, i}
@@ -100,3 +119,4 @@ a = [1,2,3,4,5,6]
 #puts a.all? {|n| n > 9}
 #puts a.any? {|n| n < 9}
 #puts a.none? {|n| n == 4}
+#puts a.count {|n| n > 2}, a.count(4)
