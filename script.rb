@@ -126,6 +126,31 @@ module Enumerable
       my_new_arr
     end
 
+    def my_map_p (my_proc) #Recives procedures (Proc)
+      if my_proc
+        i = 0
+        my_new_arr = []
+        length.times do
+          my_new_arr.push my_proc.call(self[i])
+          i += 1
+        end
+      else
+        to_enum(:my_map_p)
+      end
+      my_new_arr
+    end
+
+    def my_map_p_b (my_proc = nil) #Recives procedures (Proc)  & blocks
+      return to_enum(:my_map_p) if my_proc == nil && block_given? == nil
+      my_new_arr = []
+      if my_proc
+      self.my_each {|i| my_new_arr << my_proc.call(i)}
+        else
+      self.my_each {|i| my_new_arr << yield(i)}
+        end
+      my_new_arr
+    end
+
     def my_inject(init = self[0]) #init is the initial value, by default is the first item of self
       if block_given?
         index = 1
@@ -147,6 +172,31 @@ end
 
 a = [1,2,3,4,5,6]
 
+
+
+# ********************************** my_map_p test; it only accepts Procs
+#plus_two = Proc.new {|n| n + 2}
+#print a.my_map_p(plus_two)
+
+# ********************************** my_map_p_b test; it accepts Procs & blocks
+#plus_two = Proc.new {|n| n + 2}
+#print a.my_map_p_b(plus_two)
+
+#print a.my_map_p_b {|n| n+2}
+
+# ********************************** multiply_els method test, this test the my_inject method of the Enumerables module
+=begin
+
+def multiply_els(arr)
+  arr.my_inject {|n, i| n*i}
+end
+
+puts multiply_els(a)
+
+=end
+
+# ********************************** tests for the rest of the methods, first the created in here, second the ones that already exixt
+
 #a.my_each {|n| puts n + 5 + 2}
 #a.my_each_with_index {|n, i| print n + 5, i}
 #print a.my_select {|n| n > 2}
@@ -155,7 +205,7 @@ a = [1,2,3,4,5,6]
 #puts a.my_none? {|n| n == 4}
 #puts a.my_count {|n| n > 2}, a.my_count(4)
 #print a.my_map {|n| n+2}, a.my_map {}
-puts a.my_inject {|pr ,n| pr * n}
+#puts a.my_inject {|pr ,n| pr * n}
 
 #a.each {|n| puts n + 5 + 2}
 #a.each_with_index {|n, i| print n + 5, i}
@@ -165,7 +215,7 @@ puts a.my_inject {|pr ,n| pr * n}
 #puts a.none? {|n| n == 4}
 #puts a.count {|n| n > 2}, a.count(4)
 #print a.map {|n| n+2}, a.map {}
-puts a.inject {|pr ,n| pr * n}
+#puts a.inject {|pr ,n| pr * n}
 
 
 
