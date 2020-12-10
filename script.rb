@@ -66,6 +66,20 @@ module Enumerable
     end
     false
   end
+
+  def my_none?
+    if block_given?
+      i = 0
+      length.times do
+        value = yield self[i]
+        return false if value == true
+        i += 1
+      end
+    else
+      to_enum(:my_none)
+    end
+    true
+  end
 end
 
 
@@ -78,9 +92,11 @@ a = [1,2,3,4,5,6]
 #print a.my_select {|n| n > 2}
 #puts a.my_all? {|n| n > 9}
 #puts a.my_any? {|n| n < 9}
+#puts a.my_none? {|n| n == 4}
 
 #a.each {|n| puts n + 5 + 2}
 #a.each_with_index {|n, i| print n + 5, i}
 #print a.select {|n| n > 2}
 #puts a.all? {|n| n > 9}
 #puts a.any? {|n| n < 9}
+#puts a.none? {|n| n == 4}
