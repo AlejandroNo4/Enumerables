@@ -38,6 +38,20 @@ module Enumerable
       to_enum(:my_select)
     end
   end
+
+  def my_all?
+    if block_given?
+      i = 0
+      length.times do
+        value = yield self[i]
+        return false if value == false
+        i += 1
+      end
+    else
+      to_enum(:my_all)
+    end
+    true
+  end
 end
 
 
@@ -47,7 +61,10 @@ a = [1,2,3,4,5,6]
 
 #a.my_each {|n| puts n + 5 + 2}
 #a.my_each_with_index {|n, i| print n + 5, i}
+#print a.my_select {|n| n > 2}
+puts a.my_all? {|n| n > 9}
 
 #a.each {|n| puts n + 5 + 2}
 #a.each_with_index {|n, i| print n + 5, i}
-puts a.my_select {|n| n > 2}
+#print a.select {|n| n > 2}
+puts a.all? {|n| n > 9}
