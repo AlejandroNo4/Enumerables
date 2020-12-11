@@ -3,10 +3,11 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     i = 0
-    length.times do
-      yield self[i]
+    self.to_a.length.times do
+      yield self.to_a[i]
       i += 1
     end
+    self
   end
 
   def my_each_with_index
@@ -112,17 +113,25 @@ module Enumerable
   end
 end
 
+
+
+
 # ********************************** TESTS ************************
 
 a = [1, 2, 3, 4, 5, 6]
 
-# ************* multiply_els method test, this tests the my_inject method of the Enumerables module
+{ a: 1, b: 2, c: 3 }.my_each do |pair|
+  puts "#{pair.first} #{pair.last}"
+end
 
+# ************* multiply_els method test, this tests the my_inject method of the Enumerables module
+=begin
 def multiply_els(arr)
   arr.my_inject { |n, i| n * i }
 end
 
 puts multiply_els(a)
+=end
 
 # ******* tests for the rest of the methods
 
