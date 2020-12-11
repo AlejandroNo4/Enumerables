@@ -1,23 +1,38 @@
 module Enumerable
-  def my_each
-    return to_enum(:my_each) unless block_given?
-
+  def my_each(proce = nil)
     i = 0
-    to_a.length.times do
-      yield to_a[i]
-      i += 1
+    if proce
+      while i < to_a.length
+        proce.call(to_a[i])
+        i += 1
+      end
+    elsif block_given?
+      while i < to_a.length
+        yield to_a[i]
+        i += 1
+      end
+    else
+      to_enum(:my_each)
     end
     self
   end
 
-  def my_each_with_index
-    return to_enum(:my_each_with_index) unless block_given?
-
+  def my_each_with_index(proce = nil)
     i = 0
-    length.times do
-      yield self[i], i
-      i += 1
+    if proce
+      while i < to_a.length
+        proce.call(to_a[i], i)
+        i += 1
+      end
+    elsif block_given?
+      while i < to_a.length
+        yield to_a[i], i
+        i += 1
+      end
+    else
+      to_enum(:my_each_with_index)
     end
+    self
   end
 
   def my_select
@@ -117,7 +132,10 @@ end
 
 a = [1, 2, 3, 4, 5, 6]
 
-(1..6).my_each {|n| puts n +2}
+jeje = proc { |n, e| print n + 2, e }
+jojo = proc { |g| puts g + 2 }
+
+a.my_each_with_index(&jeje)
 
 # ************* multiply_els method test, this tests the my_inject method of the Enumerables module
 =begin
