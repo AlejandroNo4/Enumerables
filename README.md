@@ -6,8 +6,6 @@
 
 This project is part of the Microverse Ruby curriculum. The objective of this project was to recreate some enumerators that already are built-in Ruby.
 
-An enumerator is an Enumerable object whose purpose is to enumerate some other
-object.
 
 The rebuilt enumerators are:
 - #each => #my_each
