@@ -18,19 +18,19 @@ module Enumerable
   end
 
   def my_select
-    return to_enum(:my_select) if block_given?
+    return to_enum(:my_select) unless block_given?
     i = 0
     my_new_arr = [] # It will return a new array
     length.times do
       value = yield self[i]
-      my_new_arr.push self[i] if value == true
+      my_new_arr.push self[i] unless value == true
       i += 1
     end
     my_new_arr
   end
 
   def my_all?
-    return to_enum(:my_all?) if block_given?
+    return to_enum(:my_all?) unless block_given?
     i = 0
     length.times do
       value = yield self[i]
@@ -41,7 +41,7 @@ module Enumerable
   end
 
   def my_any?
-    return to_enum(:my_any?) if block_given?
+    return to_enum(:my_any?) unless block_given?
     i = 0
     length.times do
       value = yield self[i]
@@ -52,7 +52,7 @@ module Enumerable
   end
 
   def my_none?
-    return to_enum(:my_none?) if block_given?
+    return to_enum(:my_none?) unless block_given?
     i = 0
     length.times do
       value = yield self[i]
@@ -91,7 +91,7 @@ module Enumerable
   end
 
   def my_inject(init = self[0])
-    return to_enum(:my_inject) if block_given?
+    return to_enum(:my_inject) unless block_given?
     index = 1
     while index < length
       init = yield(init, self[index])
@@ -105,12 +105,6 @@ end
 
 a = [1, 2, 3, 4, 5, 6]
 
-# ************* my_map_p_b test; it accepts Procs & blocks
-# plus_two = Proc.new {|n| n + 2}
-# print a.my_map_p_b(plus_two)
-
-# print a.my_map_p_b {|n| n+2}
-
 # ************* multiply_els method test, this test the my_inject method of the Enumerables module
 
 def multiply_els(arr)
@@ -119,7 +113,7 @@ end
 
 puts multiply_els(a)
 
-# ******* tests for the rest of the methods, first the created in here, second the ones that already exixt
+# ******* tests for the rest of the methods
 
 # a.my_each {|n| puts n + 5 + 2}
 # a.my_each_with_index {|n, i| print n + 5, i}
@@ -128,18 +122,13 @@ puts multiply_els(a)
 # puts a.my_any? {|n| n < 9}
 # puts a.my_none? {|n| n == 4}
 # puts a.my_count {|n| n > 2}, a.my_count(4)
-# print a.my_map {|n| n+2}
 # puts a.my_inject {|pr ,n| pr * n}
+#*********************************
+# my_map accepts procs and blocks:
+# plus_two = Proc.new {|n| n + 2}
+# print a.my_map(plus_two)
 
-# a.each_with_index {|n, i| print n + 5, i}
-# a.each {|n| puts n + 5 + 2}
-# print a.select {|n| n > 2}
-# puts a.all? {|n| n > 9}
-# puts a.any? {|n| n < 9}
-# puts a.none? {|n| n == 4}
-# puts a.count {|n| n > 2}, a.count(4)
-# print a.map {|n| n+2}
-# puts a.inject {|pr ,n| pr * n}
+# print a.my_map {|n| n+2}
 
 # ********************************** MISCELLANEOUS ************************
 # Here are two other versions of my_map method: my_map_b, only accepts blocks. And my_map_p, which only accepts procs
@@ -181,4 +170,4 @@ puts multiply_els(a)
 # print a.my_map_p(plus_two)
 
 # ************* my_map_p test; it only accepts blocks
-# print a.my_map_b {|n| n+2}, a.my_map {}
+# print a.my_map_b {|n| n+2}
