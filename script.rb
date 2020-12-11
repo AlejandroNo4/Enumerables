@@ -123,7 +123,7 @@ puts multiply_els(a)
 # puts a.my_none? {|n| n == 4}
 # puts a.my_count {|n| n > 2}, a.my_count(4)
 # puts a.my_inject {|pr ,n| pr * n}
-#*********************************
+# *********************************
 # my_map accepts procs and blocks:
 # plus_two = Proc.new {|n| n + 2}
 # print a.my_map(plus_two)
