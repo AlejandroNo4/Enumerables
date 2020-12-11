@@ -20,7 +20,7 @@ The rebuilt enumerators are:
 - #map> #my_map
 - #inject=> #my_inject
 
-As an additional, you can find at the Miscellaneous part, two extra versions of #my_map, that can only accept either blocks or procs.
+As an additional, you can find at the Miscellaneous part two other versions of #my_map, that can only accept either blocks or procs.
 
 In addition to the methods, you can find some tests within the script in the comments. You can run these tests in your terminal. In the following sections, you can read how to do it.
 
@@ -62,7 +62,6 @@ To get a local copy up and running follow these simple example steps.
 - Open the terminal in your VSCode and run the program by typing "ruby script.rb"
 - You will be able to see the result in the same terminal. 
 - You will notice that each function is related to the array of the variable "a."
-
 
 
 ## Author
