@@ -3,8 +3,8 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     i = 0
-    self.to_a.length.times do
-      yield self.to_a[i]
+    to_a.length.times do
+      yield to_a[i]
       i += 1
     end
     self
@@ -113,16 +113,11 @@ module Enumerable
   end
 end
 
-
-
-
 # ********************************** TESTS ************************
 
 a = [1, 2, 3, 4, 5, 6]
 
-{ a: 1, b: 2, c: 3 }.my_each do |pair|
-  puts "#{pair.first} #{pair.last}"
-end
+(1..6).my_each {|n| puts n +2}
 
 # ************* multiply_els method test, this tests the my_inject method of the Enumerables module
 =begin
