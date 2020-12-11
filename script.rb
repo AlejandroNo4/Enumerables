@@ -102,7 +102,7 @@ module Enumerable
 
   def my_inject(init = self[0])
     return to_enum(:my_inject) unless block_given?
-    
+
     index = 1
     while index < length
       init = yield(init, self[index])
