@@ -1,88 +1,66 @@
 module Enumerable
-  def my_each(proce = nil)
-    i = 0
-    if proce
-      while i < to_a.length
-        proce.call(to_a[i])
-        i += 1
-      end
-    elsif block_given?
+  def my_each
+    return to_enum(:my_each) unless block_given?
+
+    i = 0 
       while i < to_a.length
         yield to_a[i]
         i += 1
       end
-    else
-      to_enum(:my_each)
-    end
     self
   end
 
-  def my_each_with_index(proce = nil)
-    i = 0
-    if proce
-      while i < to_a.length
-        proce.call(to_a[i], i)
-        i += 1
-      end
-    elsif block_given?
+  def my_each_with_index
+    return to_enum(:my_each_with_index) unless block_given?
+
+    i = 0 
       while i < to_a.length
         yield to_a[i], i
         i += 1
       end
-    else
-      to_enum(:my_each_with_index)
-    end
     self
   end
 
   def my_select
     return to_enum(:my_select) unless block_given?
 
-    i = 0
-    my_new_arr = [] # It will return a new array
-    length.times do
-      value = yield self[i]
-      my_new_arr.push self[i] unless value == true
-      i += 1
-    end
+    my_new_arr = []
+    my_each { |i| my_new_arr.push i if (yield i) == true }
     my_new_arr
   end
 
-  def my_all?
-    return to_enum(:my_all?) unless block_given?
+  def my_all?(arg = nil)
 
-    i = 0
-    length.times do
-      value = yield self[i]
-      return false if value == false
-
-      i += 1
+    if arg
+      my_each { |i| return false unless arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+    elsif block_given?
+      my_each { |i| return false unless (yield i) == true }
+    else
+      my_each{ |i| return false if i == false || i == nil }
     end
     true
   end
 
-  def my_any?
-    return to_enum(:my_any?) unless block_given?
+  def my_any?(arg = nil)
 
-    i = 0
-    length.times do
-      value = yield self[i]
-      return true if value == true
-
-      i += 1
+    if arg
+      my_each { |i| return true if arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+    elsif block_given?
+      my_each { |i| return true if (yield i) == true }
+    else
+      my_each{ |i| return true if i }
     end
     false
   end
 
-  def my_none?
-    return to_enum(:my_none?) unless block_given?
+  def my_none?(arg = nil)
 
-    i = 0
-    length.times do
-      value = yield self[i]
-      return false if value == true
-
-      i += 1
+    if arg
+      my_each { |i| return false if arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+    elsif block_given?
+      my_each { |i| return false if (yield i) == true }
+    else
+      my_each{ |i| return false if i }
     end
     true
   end
@@ -132,10 +110,17 @@ end
 
 a = [1, 2, 3, 4, 5, 6]
 
-jeje = proc { |n, e| print n + 2, e }
-jojo = proc { |g| puts g + 2 }
 
-a.my_each_with_index(&jeje)
+puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+puts %w{ant bear cat}.my_none?(/d/)                        #=> true
+puts [1, 3.14, 42].my_none?(Float)                         #=> false
+puts [].my_none?                                           #=> true
+puts [nil].my_none?                                        #=> true
+puts [nil, false].my_none?                                 #=> true
+puts [nil, false, true].my_none?                           #=> false
+
+
 
 # ************* multiply_els method test, this tests the my_inject method of the Enumerables module
 =begin
