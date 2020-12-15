@@ -24,7 +24,7 @@ In addition to the methods, you can find some tests within the script in the com
 
 ## Built With
 
-- Ruby 2.7.0p0
+- Ruby 2.7.2
 - VsCode
 - Git
 
@@ -56,7 +56,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Run tests
 
-- Uncomment the lines of code in the "Tests" part. I recommend you uncomment one by one as you use them, to avoid confusion.
+- Type some code at the bottom, using the created methods.
 - Open the terminal in your VSCode and run the program by typing "ruby script.rb"
 - You will be able to see the result in the same terminal. 
 - You will notice that each function is related to the array of the variable "a."

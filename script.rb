@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -28,7 +29,6 @@ module Enumerable
     my_each { |i| my_new_arr.push i if (yield i) == true }
     my_new_arr
   end
-  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
   def my_all?(arg = nil)
     if arg.is_a?(Class)
