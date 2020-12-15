@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -32,7 +32,7 @@ module Enumerable
 
   def my_all?(arg = nil)
     if arg
-      my_each { |i| return false unless arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+      my_each { |i| return false unless arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) || i == arg }
     elsif block_given?
       my_each { |i| return false unless (yield i) == true }
     else
@@ -43,7 +43,7 @@ module Enumerable
 
   def my_any?(arg = nil)
     if arg
-      my_each { |i| return true if arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+      my_each { |i| return true if arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) || i == arg }
     elsif block_given?
       my_each { |i| return true if (yield i) == true }
     else
@@ -54,7 +54,7 @@ module Enumerable
 
   def my_none?(arg = nil)
     if arg
-      my_each { |i| return false if arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+      my_each { |i| return false if arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) || i == arg }
     elsif block_given?
       my_each { |i| return false if (yield i) == true }
     else
@@ -76,7 +76,7 @@ module Enumerable
   end
 
   def my_map(my_proc = nil)
-    return to_enum(:my_map) if my_proc.nil? && block_given?.nil?
+    return to_enum(:my_map) if my_proc.nil? && block_given? == false
 
     my_new_arr = []
     if my_proc
@@ -101,12 +101,4 @@ module Enumerable
   end
 end
 
-a = [1, 2, 3, 4, 5]
-
-def multiply_els(arr)
-  arr.my_inject { |n, i| n * i }
-end
-
-puts multiply_els(a)
-
-# rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
