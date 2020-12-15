@@ -31,10 +31,10 @@ module Enumerable
   end
 
   def my_all?(arg = nil)
-    if arg.is_a?(Class)
-      my_each { |i| return false unless i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
+    if arg
+      my_each { |i| return false unless arg.is_a?(Class) && i.is_a?(arg) || arg.is_a?(Regexp) && i.match(arg) }
     elsif block_given?
-      my_each { |i| return false unless (yield i) == true }
+      my_each { |i| return false unless (yield i) == true}
     else
       my_each { |i| return false if i == false || i.nil? }
     end
@@ -110,3 +110,10 @@ end
 puts multiply_els(a)
 
 # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
+puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+puts %w[ant bear cat].my_any?(/d/)                        #=> false
+puts [nil, true, 99].my_any?(Integer)                     #=> true
+puts [nil, true, 99].my_any?                              #=> true
+puts [].my_any?                                           #=> false
