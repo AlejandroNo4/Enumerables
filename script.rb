@@ -107,6 +107,3 @@ def multiply_els(arr)
 end
 
 puts multiply_els(a)
-
-rubocop:enable Metrics/CyclomaticComplexity
-rubocop:enable Metrics/PerceivedComplexity
