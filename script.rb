@@ -28,6 +28,7 @@ module Enumerable
     my_each { |i| my_new_arr.push i if (yield i) == true }
     my_new_arr
   end
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
   def my_all?(arg = nil)
     if arg.is_a?(Class)
@@ -108,5 +109,4 @@ end
 
 puts multiply_els(a)
 
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
