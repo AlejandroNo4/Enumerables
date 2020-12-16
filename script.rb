@@ -101,4 +101,8 @@ module Enumerable
   end
 end
 
+def multiply_els(unit)
+  unit.my_inject { |res, i| res * i }
+end
+
 # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
