@@ -1,3 +1,5 @@
+#spec/enumerables_spec.rb
+
 # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
 module Enumerable
   def my_each
@@ -80,9 +82,9 @@ module Enumerable
 
     my_new_arr = []
     if my_proc
-      my_each { |i| my_new_arr << my_proc.call(i) } # It is applyed on itself, so it is not necessary "self.my_each"
+      my_each { |i| my_new_arr << my_proc.call(i) }
     else
-      my_each { |i| my_new_arr << yield(i) } # It is applyed on itself, so it is not necessary "self.my_each"
+      my_each { |i| my_new_arr << yield(i) }
     end
     my_new_arr
   end
