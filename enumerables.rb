@@ -1,4 +1,4 @@
-#spec/enumerables_spec.rb
+# spec/enumerables_spec.rb
 
 # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
 module Enumerable
