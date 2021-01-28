@@ -16,6 +16,15 @@ describe Enumerable do
 end
 
 describe Enumerable do
+  describe '.my_each' do
+    let(:test_one) {[1, 2, 3].my_each { |a| a += 1 }}
+    it 'tests the BAD USE of .my_each, this will returns the same array' do
+      expect(test_one).not_to eql([2, 3, 4])
+    end
+  end
+end
+
+describe Enumerable do
   describe '.my_each_with_index' do
     it 'besides the element, now it has the value of the index' do
       sum_ewi = 5
@@ -31,6 +40,15 @@ describe Enumerable do
 end
 
 describe Enumerable do
+  describe '.my_each_with_index' do
+    let(:test_one) {[1, 2, 3].my_each_with_index { |a, i| a += i }}
+    it 'tests the BAD USE of .my_each_with_index, this will NOT return the sum from test_one' do
+      expect(test_one).not_to eql([1, 3, 5])
+    end
+  end
+end
+
+describe Enumerable do
   describe '.my_select' do
     it 'returns an array containing the values that are true from the block' do
       res_arr = [1, 2, 3, 4, 5].my_select(&:even?)
@@ -40,6 +58,16 @@ describe Enumerable do
     it 'returns Enumerable if no block is given' do
       no_block = [1, 2, 3, 4, 5].my_select
       expect(no_block.is_a?(Enumerable)).to eql(true)
+    end
+  end
+end
+
+describe Enumerable do
+  describe '.my_select' do
+    it 'tests the BAD USE of .my_select, the method ALWAYS will return a new array' do
+      res = [1, 2, 3, 4, 5]
+      res.my_select { |a| a > 2}
+      expect(res).not_to eql([3, 4, 5])
     end
   end
 end
